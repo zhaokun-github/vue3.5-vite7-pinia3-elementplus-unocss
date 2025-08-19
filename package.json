@@ -1,0 +1,31 @@
+{
+  "name": "vue-alien-signals-app",
+  "version": "1.0.0",
+  "description": "A Vue 3.6+ application using Alien Signals, Vite, Rolldown, Pinia, Element Plus, and Vue Copilot.",
+  "scripts": {
+    "dev": "vite",
+    "build:test": "vite build --mode test",
+    "build:gray": "vite build --mode gray",
+    "build:prod": "vite build --mode production",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "alien-signals": "^1.0.0",
+    "axios": "^1.11.0",
+    "echarts": "^5.6.0",
+    "element-plus": "^2.0.0",
+    "pinia": "^3.0.0",
+    "vue-echarts": "^7.0.3",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "rolldown": "^0.10.1",
+    "typescript": "^5.0.0",
+    "unocss": "^66.4.1",
+    "vite": "^7.0.6",
+    "vue": "^3.5.18"
+  },
+  "license": "MIT",
+  "type": "module"
+}
