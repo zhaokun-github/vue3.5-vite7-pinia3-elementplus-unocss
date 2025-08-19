@@ -2,11 +2,20 @@
 <template>
   <div class="audit-page">
     <h2 class="audit-title">内容审核列表</h2>
-    <button
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border-0"
-    >
-      Unocss 按钮
-    </button>
+    <div style="text-align: right; color: #42a5f5; margin-bottom: 12px">
+      已通过数量：{{ auditStore.passedCount }}
+    </div>
+    <div style="margin-bottom: 16px">
+      <button
+        @click="auditStore.addOne"
+        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 border-0"
+      >
+        点我加加
+      </button>
+      <span style="margin-left: 12px; color: #42b983">
+        计数器：{{ auditStore.count }}
+      </span>
+    </div>
     <div style="display: grid; place-items: center">
       <div>88888</div>
       <span>123</span>
@@ -56,13 +65,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import request from "@/utils/request";
+import { useAuditStore } from "@/store/index"; // 引入store
 
+const auditStore = useAuditStore(); // 使用store
 const tableData = ref<any[]>([]);
 
 async function fetchAuditList() {
-  // 模拟接口请求
   try {
-    // 假接口，实际开发请替换为真实接口
     const res = await request.get("/mock/audit-list");
     tableData.value = res.data || [
       { id: 1, title: "广告内容A", author: "张三", status: "待审核" },
@@ -71,8 +80,11 @@ async function fetchAuditList() {
       { id: 4, title: "广告内容D", author: "赵六", status: "已驳回" },
       { id: 5, title: "广告内容E", author: "小明", status: "待审核" },
     ];
+    // 初始化统计
+    auditStore.passedCount = tableData.value.filter(
+      (item) => item.status === "已通过"
+    ).length;
   } catch {
-    // 失败时用假数据
     tableData.value = [
       { id: 1, title: "广告内容A", author: "张三", status: "待审核" },
       { id: 2, title: "广告内容B", author: "李四", status: "已通过" },
@@ -80,6 +92,9 @@ async function fetchAuditList() {
       { id: 4, title: "广告内容D", author: "赵六", status: "已驳回" },
       { id: 5, title: "广告内容E", author: "小明", status: "待审核" },
     ];
+    auditStore.passedCount = tableData.value.filter(
+      (item) => item.status === "已通过"
+    ).length;
   }
 }
 
@@ -89,6 +104,7 @@ onMounted(() => {
 
 function pass(row: any) {
   row.status = "已通过";
+  auditStore.increment(); // 通过时统计+1
 }
 function reject(row: any) {
   row.status = "已驳回";

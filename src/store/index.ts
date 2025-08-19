@@ -17,3 +17,18 @@ export const useMainStore = defineStore('main', {
     },
   },
 });
+
+export const useAuditStore = defineStore('audit', {
+  state: () => ({
+    passedCount: 0,
+    count: 0 // 新增计数器
+  }),
+  actions: {
+    increment() {
+      this.passedCount++
+    },
+    addOne() {
+      this.count++
+    }
+  }
+})
